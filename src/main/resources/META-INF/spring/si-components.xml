@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:int="http://www.springframework.org/schema/integration" 
+    xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+    xsi:schemaLocation="
+     http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans.xsd 
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context.xsd
+     http://www.springframework.org/schema/integration
+     http://www.springframework.org/schema/integration/spring-integration.xsd 
+     http://www.springframework.org/schema/integration/stream 
+     http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd
+    ">
+    
+    <context:component-scan base-package="test" />
+    
+    <context:property-placeholder location="file:///home/darkhipov/workspace/messaging-si-poc/si-ident.properties" />
+    
+    <!-- -->
+    <int:poller 
+        id="defaultPoller" 
+        default="true" 
+        max-messages-per-poll="5" 
+        fixed-rate="128"
+    />
+    
+    <int:channel id="calamp-source-channel" />
+
+    <int:channel id="calamp-channel-A" />
+    <int:channel id="calamp-channel-B" />
+    <int:channel id="calamp-channel-C" />
+    <int:channel id="calamp-channel-D" />
+    <int:channel id="calamp-channel-E" />
+    <int:channel id="calamp-channel-F" />
+    
+    <int:channel id="calamp-target-channel" />
+    
+    <int:transformer 
+        input-channel="calamp-channel-A"
+        output-channel="calamp-source-channel" 
+        ref="transforms"
+        method="transform" 
+    />
+    
+     <int:transformer 
+        input-channel="calamp-channel-B"
+        output-channel="calamp-source-channel" 
+        ref="transforms"
+        method="transform" 
+    />
+    
+     <int:transformer 
+        input-channel="calamp-channel-C"
+        output-channel="calamp-source-channel" 
+        ref="transforms"
+        method="transform" 
+    />
+    
+     <int:transformer 
+        input-channel="calamp-channel-D"
+        output-channel="calamp-source-channel" 
+        ref="transforms"
+        method="transform" 
+    />
+    
+     <int:transformer 
+        input-channel="calamp-channel-E"
+        output-channel="calamp-source-channel" 
+        ref="transforms"
+        method="transform" 
+    />
+    
+     <int:transformer 
+        input-channel="calamp-channel-F"
+        output-channel="calamp-source-channel" 
+        ref="transforms"
+        method="transform" 
+    />
+    
+    <int-stream:stdout-channel-adapter 
+        id="target-channel-adapter-id" 
+        channel="calamp-target-channel" 
+        append-newline="true" 
+    />
+    
+    <bean class="com.calamp.messaging.spring.integration.poc.Transforms" name="transforms"/>
+    
+    <int:header-value-router 
+        input-channel="calamp-source-channel"
+    	header-name="calamp-next-hop"
+    	default-output-channel="calamp-target-channel">
+	    <int:mapping value="A" channel="calamp-channel-A" />
+	    <int:mapping value="B" channel="calamp-channel-B" />
+	    <int:mapping value="C" channel="calamp-channel-C" />
+	    <int:mapping value="D" channel="calamp-channel-D" />
+	    <int:mapping value="E" channel="calamp-channel-E" />
+	    <int:mapping value="F" channel="calamp-target-channel" />
+    </int:header-value-router>
+</beans>
