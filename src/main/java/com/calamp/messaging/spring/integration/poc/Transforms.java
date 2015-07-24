@@ -23,7 +23,7 @@ public class Transforms {
     }
     
     @Transformer
-    public Message<CalAmpSIWrapper> transform(Message<CalAmpSIWrapper> messageIn) throws InterruptedException {
+    public static Message<CalAmpSIWrapper> transform(Message<CalAmpSIWrapper> messageIn) throws InterruptedException {
 	CalAmpSIWrapper inboundPayload = messageIn.getPayload();
 	CalAmpSIStage stage = stageMap.get(inboundPayload.nextStepPeek());
 	CalAmpSIWrapper outboundPayload = stage.enact(inboundPayload);
