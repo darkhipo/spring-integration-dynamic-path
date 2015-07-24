@@ -1,6 +1,8 @@
 # spring-integration-dynamic-path
 Uses header router to allow for a reconfigurable process path. 
 
+![alt tag](https://github.com/darkhipo/spring-integration-dynamic-path/blob/master/dynamic_route.jpg)
+
 # XML Configuration
 
 The SI network is defined in resources/MET-INF/si-components.xml . This file will need to be modified to account for all known stages of the domain specific Spring Integration network. This file must configure a channel outbound from each such stage (except for the terminating stage) and inbound into an SI header-router. All channel routes for the header-router must be assigned as a bean in the si-components.xml file. The SI header-router serves as a demultiplexer for the system; each incomming message is routed to the next stage based on a 'calamp-next-hop' SI-header field. The router will route the terminating stage to the terminating channel which feeds into a terminating service activator or optionally a terminating adapter thus concluding the flow. The terminating service activator or adapter as well as the terminating channel must also be configured in si-components.xml . 
