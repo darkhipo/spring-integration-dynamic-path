@@ -33,11 +33,11 @@ public class Startup {
 	MessageChannel channel;
 	channel = context.getBean(sourceChannelName, MessageChannel.class);
 
-	runWorkTop( channel );
+	runTest( channel );
 	context.close();
     }
 
-    private static void runWorkTop( MessageChannel channel) {
+    private static void runTest( MessageChannel channel) {
 	boolean doStop = false;
 	int dataByteCount = 2048;
 	int testCount = 100;
