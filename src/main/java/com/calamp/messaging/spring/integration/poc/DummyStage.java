@@ -3,8 +3,8 @@ package com.calamp.messaging.spring.integration.poc;
 import java.util.Collections;
 
 public class DummyStage extends CalAmpSIStage {
-    public DummyStage(String ident) {
-	super(ident);
+    public DummyStage(String ident, Boolean isFinalStage) {
+	super(ident, isFinalStage);
     }
     public CalAmpSIWrapper enact( CalAmpSIWrapper inPayload ){
 	/* TODO: Actual Work Would Happen Here. 

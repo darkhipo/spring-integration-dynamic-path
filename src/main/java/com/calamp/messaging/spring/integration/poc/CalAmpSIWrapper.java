@@ -53,6 +53,29 @@ public class CalAmpSIWrapper {
 	return null;
     }
     
+    private static List<String> copyStringList(List<String> toCopy) {
+	ArrayList<String> theCopy = new ArrayList<String>();
+	for (String s : toCopy) {
+	    theCopy.add(new String(s));
+	}
+	return theCopy;
+    }
+    
+    private static void assertIndexCorrect(String myName, String concretePresent) {
+	if (!myName.equals(concretePresent)) {
+	    throw new IllegalStateException("In state [" + myName
+		    + "] with inconsistent path value: [" + concretePresent
+		    + "]");
+	}
+    }
+    
+    @Override
+    public String toString() {
+	return "CalAmpSIWrapper [siIdent=" + siIdent + ", transitPath="
+		+ transitPath + ", futurePath=" + futurePath + ", dataBytes="
+		+ Arrays.toString(dataBytes) + "]";
+    }
+    
     public UUID getSiIdent() {
 	return siIdent;
     }
@@ -87,28 +110,5 @@ public class CalAmpSIWrapper {
 
     public void setFuturePath(List<String> futurePath) {
         this.futurePath = futurePath;
-    }
-    
-    @Override
-    public String toString() {
-	return "CalAmpSIWrapper [siIdent=" + siIdent + ", transitPath="
-		+ transitPath + ", futurePath=" + futurePath + ", dataBytes="
-		+ Arrays.toString(dataBytes) + "]";
-    }
-    
-    private static List<String> copyStringList(List<String> toCopy) {
-	ArrayList<String> theCopy = new ArrayList<String>();
-	for (String s : toCopy) {
-	    theCopy.add(new String(s));
-	}
-	return theCopy;
-    }
-    
-    private static void assertIndexCorrect(String myName, String concretePresent) {
-	if (!myName.equals(concretePresent)) {
-	    throw new IllegalStateException("In state [" + myName
-		    + "] with inconsistent path value: [" + concretePresent
-		    + "]");
-	}
     }
 }
