@@ -42,14 +42,14 @@ public class Transforms {
 	CalAmpSIStage stage = Transforms.resolveStage(inboundPayload.nextStepPeek());
 	CalAmpSIWrapper outboundPayload = stage.enact(inboundPayload);
 	String nextHop = outboundPayload.nextStepPeek();
-	if( nextHop != null ){
-	    String logstr = "Transform " + inboundPayload.getSiIdent() + " AT: " ;
-	    logstr += inboundPayload.nextStepPeek() + " NEXT-HOP: " + nextHop;
-	    log.info( logstr );
-	}
-	if ( stage.getIsFinalStage() ) {
+	if ( nextHop == null || stage == null || stage.getIsFinalStage() ) {
 	    nextHop = CalAmpSIConfig.terminalStageTag;
 	}
+	
+	String logstr = "Transform " + inboundPayload.getSiIdent() + " AT: " ;
+        logstr += inboundPayload.nextStepPeek() + " NEXT-HOP: " + nextHop;
+        log.info( logstr );
+        
 	Message<CalAmpSIWrapper> m1;
 	m1 = MessageBuilder.withPayload(outboundPayload)
 		.setHeader(CalAmpSIConfig.nextHopHeaderName, nextHop)

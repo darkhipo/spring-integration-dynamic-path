@@ -23,8 +23,8 @@ public class Startup {
     static Logger log = Logger.getLogger(Startup.class.getName());
     
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException, TimeoutException, InvalidAlgorithmParameterException {
-	ClassPathXmlApplicationContext context = contextFromXmlConfig();
-	//ApplicationContext context = contextFromJavaConfig();
+	//ClassPathXmlApplicationContext context = contextFromXmlConfig();
+	ApplicationContext context = contextFromJavaConfig();
 
 	MessageChannel channel;
 	channel = context.getBean(CalAmpSIConfig.sourceChannelName, MessageChannel.class);

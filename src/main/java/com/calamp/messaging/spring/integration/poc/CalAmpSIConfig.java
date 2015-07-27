@@ -12,7 +12,7 @@ import org.springframework.scheduling.support.PeriodicTrigger;
 @ComponentScan
 @EnableIntegration
 @IntegrationComponentScan
-@Import( { TargetServiceActivator.class, Transforms.class, Routers.class} )
+@Import( { TargetServiceActivator.class, Transforms.class, Routers.class } )
 public class CalAmpSIConfig {
     public final static String sourceChannelName = "calAmpSourceChannel";
     public final static String stageChannelName  = "calAmpStageChannel";

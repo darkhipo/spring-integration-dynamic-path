@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class Routers {
     private static Logger log = Logger.getLogger(Routers.class.getName());
     
-    @Router(inputChannel = CalAmpSIConfig.sourceChannelName, applySequence = "true")  
+    @Router(inputChannel = CalAmpSIConfig.sourceChannelName, defaultOutputChannel = CalAmpSIConfig.targetChannelName, applySequence = "true")  
     public List<String> route(@Header(CalAmpSIConfig.nextHopHeaderName) String nextHop, Message<CalAmpSIWrapper> inbound) throws InterruptedException{
 	log.info( "Route [" + "Payload: "+ inbound + " Next-Hop: " + nextHop + "]");
 	List<String> routesTo = new ArrayList<String>();

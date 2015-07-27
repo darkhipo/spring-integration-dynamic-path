@@ -15,10 +15,9 @@
      http://www.springframework.org/schema/context
      http://www.springframework.org/schema/context/spring-context.xsd
     ">
-    
+
     <context:component-scan base-package="com.calamp.messaging.spring.integration.poc" />
-    <context:property-placeholder location="file:///home/darkhipov/workspace/messaging-si-poc/si-ident.properties" />
-    
+    <!-- <context:property-placeholder location="file:///..........si-ident.properties" /> -->
 
     <int:poller 
         id="defaultPoller" 
@@ -30,10 +29,6 @@
     <int:channel id="calAmpSourceChannel" />
     <int:channel id="calAmpStageChannel" />
     <int:channel id="calAmpTargetChannel" />
-    
-    <bean id="${X}"
-        class="java.lang.Object">
-    </bean>
     
     <int:transformer 
         input-channel="calAmpStageChannel"
