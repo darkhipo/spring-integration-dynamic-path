@@ -65,10 +65,6 @@ public class Transforms {
         logstr += inboundPayload.nextStepPeek() + " NEXT-HOP: " + nextHop;
         log.info( logstr );
         
-        if(nextHop.equals("D") ){
-            throw new InvalidAlgorithmParameterException();
-        }
-        
 	Message<CalAmpSIWrapper> m1;	
 	m1 = MessageBuilder
 		.withPayload(outboundPayload)

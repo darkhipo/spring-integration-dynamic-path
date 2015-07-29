@@ -35,7 +35,6 @@ public class Routers {
 	    routesTo.add( CalAmpSIConfig.stageChannelName );
 	}
 
-
 	return routesTo;
     }
     
