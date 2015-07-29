@@ -12,9 +12,11 @@ public class CalAmpSIWrapper {
     private byte[] dataBytes;
     private List<String> transitPath;
     private List<String> futurePath;
+    private Exception wrappedException;
 
     public CalAmpSIWrapper(UUID siIdent, byte[] dataBytes, List<String> planPath) {
 	super();
+	this.wrappedException = null;
 	this.siIdent = siIdent;
 	this.dataBytes = Base64.encodeBase64(dataBytes);
 	this.transitPath = new ArrayList<String> ();
@@ -23,12 +25,17 @@ public class CalAmpSIWrapper {
     
     public CalAmpSIWrapper(CalAmpSIWrapper copyMe) {
 	super();
+	this.wrappedException = null;
 	this.siIdent = UUID.fromString( copyMe.getSiIdent().toString() );
 	this.transitPath = CalAmpSIWrapper.copyStringList( copyMe.getTransitPath() );
 	this.futurePath = CalAmpSIWrapper.copyStringList( copyMe.getFuturePath() );
 	this.dataBytes = Base64.encodeBase64( copyMe.getDataBytes() );
     }
 
+    public CalAmpSIWrapper(Exception e) {
+	this.wrappedException = e;
+    }
+    
     public String advance(String step){
 	CalAmpSIWrapper.assertIndexCorrect(futurePath.get(0), step);
 	if(futurePath.size() > 0){
@@ -71,9 +78,14 @@ public class CalAmpSIWrapper {
     
     @Override
     public String toString() {
-	return "CalAmpSIWrapper [siIdent=" + siIdent + ", transitPath="
-		+ transitPath + ", futurePath=" + futurePath + ", dataBytes="
-		+ Arrays.toString(dataBytes) + "]";
+	if( this.wrappedException == null ){
+        	return "CalAmpSIWrapper [siIdent=" + siIdent + ", transitPath="
+        		+ transitPath + ", futurePath=" + futurePath + ", dataBytes="
+        		+ Arrays.toString(dataBytes) + "]";
+	}
+	else{
+	    return "ErrorCalAmpSIWrapper " + this.wrappedException;
+	}
     }
     
     public UUID getSiIdent() {
@@ -110,5 +122,9 @@ public class CalAmpSIWrapper {
 
     public void setFuturePath(List<String> futurePath) {
         this.futurePath = futurePath;
+    }
+
+    public Exception getWrappedException() {
+        return wrappedException;
     }
 }

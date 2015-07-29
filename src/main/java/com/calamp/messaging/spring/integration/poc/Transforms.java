@@ -35,13 +35,28 @@ public class Transforms {
 	}
 	return null;
     }
-    
+    private static Message<CalAmpSIWrapper> enrichWithHeader(Message<CalAmpSIWrapper> messageIn) {
+	CalAmpSIWrapper outboundPayload = messageIn.getPayload();
+	String nextHop = outboundPayload.nextStepPeek();
+	Message<CalAmpSIWrapper> m1;	
+	m1 = MessageBuilder
+		.withPayload(outboundPayload)
+		.copyHeaders(messageIn.getHeaders())
+		.setHeader(CalAmpSIConfig.nextHopHeaderName, nextHop)
+		.build();
+	return m1;
+    }
     @Transformer(inputChannel = CalAmpSIConfig.stageChannelName, outputChannel = CalAmpSIConfig.sourceChannelName )
-    public static Message<CalAmpSIWrapper> transform( Message<CalAmpSIWrapper> messageIn ) throws InterruptedException {
+    public static Message<CalAmpSIWrapper> transform( Message<CalAmpSIWrapper> messageIn ) throws InvalidAlgorithmParameterException{
 	CalAmpSIWrapper inboundPayload = messageIn.getPayload();
+	if( !messageIn.getHeaders().containsKey(CalAmpSIConfig.nextHopHeaderName) ){
+	    messageIn = enrichWithHeader(messageIn);
+	}
+	
 	CalAmpSIStage stage = Transforms.resolveStage(inboundPayload.nextStepPeek());
 	CalAmpSIWrapper outboundPayload = stage.enact(inboundPayload);
 	String nextHop = outboundPayload.nextStepPeek();
+	
 	if ( nextHop == null || stage == null || stage.getIsFinalStage() ) {
 	    nextHop = CalAmpSIConfig.terminalStageTag;
 	}
@@ -50,10 +65,17 @@ public class Transforms {
         logstr += inboundPayload.nextStepPeek() + " NEXT-HOP: " + nextHop;
         log.info( logstr );
         
-	Message<CalAmpSIWrapper> m1;
-	m1 = MessageBuilder.withPayload(outboundPayload)
+        if(nextHop.equals("D") ){
+            throw new InvalidAlgorithmParameterException();
+        }
+        
+	Message<CalAmpSIWrapper> m1;	
+	m1 = MessageBuilder
+		.withPayload(outboundPayload)
+		.copyHeaders(messageIn.getHeaders())
 		.setHeader(CalAmpSIConfig.nextHopHeaderName, nextHop)
 		.build();
+	
 	return m1;
     }
 }
