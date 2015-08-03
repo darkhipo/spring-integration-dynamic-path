@@ -1,5 +1,5 @@
 # spring-integration-dynamic-path
-Uses header router to allow for a reconfigurable process path. 
+Uses custon router or header router to allow for a reconfigurable process path. 
 
 ![alt tag](https://github.com/darkhipo/spring-integration-dynamic-path/blob/master/dynamic_route.jpg)
 
