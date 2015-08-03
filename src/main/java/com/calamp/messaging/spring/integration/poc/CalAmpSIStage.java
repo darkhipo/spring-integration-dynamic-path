@@ -15,5 +15,5 @@ public abstract class CalAmpSIStage {
         return isFinalStage;
     }
     
-    public abstract CalAmpSIWrapper enact( CalAmpSIWrapper inPayload );
+    public abstract CalAmpSIWrapper enact( CalAmpSIWrapper inPayload ) throws Exception;
 }

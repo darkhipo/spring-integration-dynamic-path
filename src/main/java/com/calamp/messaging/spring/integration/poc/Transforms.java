@@ -1,6 +1,5 @@
 package com.calamp.messaging.spring.integration.poc;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,11 +19,10 @@ public class Transforms {
 	Transforms.stageMap = new HashMap<String, CalAmpSIStage>();
 	Transforms.stageMap.put(CalAmpSIConfig.terminalStageTag, new TargetStage(CalAmpSIConfig.terminalStageTag, true) );
     }
-    public static void registerStage(CalAmpSIStage newStage) throws InvalidAlgorithmParameterException{
-	if( newStage.getStageIdentifer().equals(CalAmpSIConfig.terminalStageTag) ){
-	    throw new InvalidAlgorithmParameterException("\""+ CalAmpSIConfig.terminalStageTag + "\" is not a valid stage identifier.");
+    public static void registerStage(CalAmpSIStage newStage) {
+	if( !newStage.getStageIdentifer().equals(CalAmpSIConfig.terminalStageTag ) ){
+	    Transforms.stageMap.put(newStage.getStageIdentifer(), newStage);
 	}
-	Transforms.stageMap.put(newStage.getStageIdentifer(), newStage);
     }
     public static Set<String> getStageKeys( ){
 	return Transforms.stageMap.keySet();
@@ -47,7 +45,7 @@ public class Transforms {
 	return m1;
     }
     @Transformer(inputChannel = CalAmpSIConfig.stageChannelName, outputChannel = CalAmpSIConfig.sourceChannelName )
-    public static Message<CalAmpSIWrapper> transform( Message<CalAmpSIWrapper> messageIn ) throws InvalidAlgorithmParameterException{
+    public static Message<CalAmpSIWrapper> transform( Message<CalAmpSIWrapper> messageIn ) throws Exception{
 	CalAmpSIWrapper inboundPayload = messageIn.getPayload();
 	if( !messageIn.getHeaders().containsKey(CalAmpSIConfig.nextHopHeaderName) ){
 	    messageIn = enrichWithHeader(messageIn);

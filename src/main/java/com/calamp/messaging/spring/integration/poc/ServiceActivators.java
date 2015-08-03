@@ -15,6 +15,6 @@ public class ServiceActivators {
     public void printObject(Object obj){
 	String preamble = "[Message at Completion]: ";
 	log.info(preamble + obj);
-	System.out.println(obj);
+	//System.out.println(obj);
     }
 }
