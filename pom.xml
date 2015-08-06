@@ -1,74 +1,75 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.calamp</groupId>
-  <artifactId>messaging-si-poc</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <springframework.version>4.1.6.RELEASE</springframework.version>
-        <spring.integration.version>4.1.6.RELEASE</spring.integration.version>
-        <spring.integration.xml.version>4.1.6.RELEASE</spring.integration.xml.version>
-        <spring.integration.java.dsl.version>1.0.0.RELEASE</spring.integration.java.dsl.version>
-        <log4j.version>1.2.17</log4j.version>
-    </properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ <modelVersion>4.0.0</modelVersion>
+ <groupId>com.calamp</groupId>
+ <artifactId>messaging-si-poc</artifactId>
+ <version>0.0.1-SNAPSHOT</version>
 
-    <dependencies>
+ <properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <springframework.version>4.1.6.RELEASE</springframework.version>
+  <spring.integration.version>4.1.6.RELEASE</spring.integration.version>
+  <spring.integration.xml.version>4.1.6.RELEASE</spring.integration.xml.version>
+  <spring.integration.java.dsl.version>1.0.0.RELEASE</spring.integration.java.dsl.version>
+  <log4j.version>1.2.17</log4j.version>
+ </properties>
 
-        <dependency>
-            <groupId>org.springframework.integration</groupId>
-            <artifactId>spring-integration-core</artifactId>
-            <version>${spring.integration.version}</version>
-        </dependency>
+ <dependencies>
 
-        <dependency>
-            <groupId>org.springframework.integration</groupId>
-            <artifactId>spring-integration-stream</artifactId>
-            <version>${spring.integration.version}</version>
-        </dependency>
+  <dependency>
+   <groupId>org.springframework.integration</groupId>
+   <artifactId>spring-integration-core</artifactId>
+   <version>${spring.integration.version}</version>
+  </dependency>
 
-        <dependency>
-            <groupId>org.springframework.integration</groupId>
-            <artifactId>spring-integration-file</artifactId>
-            <version>${spring.integration.version}</version>
-        </dependency>
+  <dependency>
+   <groupId>org.springframework.integration</groupId>
+   <artifactId>spring-integration-stream</artifactId>
+   <version>${spring.integration.version}</version>
+  </dependency>
 
-        <dependency>
-            <groupId>org.springframework.integration</groupId>
-            <artifactId>spring-integration-xml</artifactId>
-            <version>${spring.integration.xml.version}</version>
-        </dependency>
+  <dependency>
+   <groupId>org.springframework.integration</groupId>
+   <artifactId>spring-integration-file</artifactId>
+   <version>${spring.integration.version}</version>
+  </dependency>
 
-        <dependency>
-            <groupId>org.springframework.integration</groupId>
-            <artifactId>spring-integration-java-dsl</artifactId>
-            <version>${spring.integration.java.dsl.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        
-        <dependency>
-		    <groupId>commons-lang</groupId>
-		    <artifactId>commons-lang</artifactId>
-		    <version>2.6</version>
-		</dependency>
-		
-		<dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.5.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
-        </dependency>
+  <dependency>
+   <groupId>org.springframework.integration</groupId>
+   <artifactId>spring-integration-xml</artifactId>
+   <version>${spring.integration.xml.version}</version>
+  </dependency>
 
-    </dependencies>
-    
+  <dependency>
+   <groupId>org.springframework.integration</groupId>
+   <artifactId>spring-integration-java-dsl</artifactId>
+   <version>${spring.integration.java.dsl.version}</version>
+  </dependency>
+
+  <dependency>
+   <groupId>log4j</groupId>
+   <artifactId>log4j</artifactId>
+   <version>${log4j.version}</version>
+  </dependency>
+
+  <dependency>
+   <groupId>commons-lang</groupId>
+   <artifactId>commons-lang</artifactId>
+   <version>2.6</version>
+  </dependency>
+
+  <dependency>
+   <groupId>com.fasterxml.jackson.core</groupId>
+   <artifactId>jackson-databind</artifactId>
+   <version>2.5.0</version>
+  </dependency>
+
+  <dependency>
+   <groupId>commons-codec</groupId>
+   <artifactId>commons-codec</artifactId>
+   <version>1.10</version>
+  </dependency>
+
+ </dependencies>
+
 </project>

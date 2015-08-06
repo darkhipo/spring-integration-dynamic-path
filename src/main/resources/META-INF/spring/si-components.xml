@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans 
-    xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:int="http://www.springframework.org/schema/integration" 
-    xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+ xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xsi:schemaLocation="
      http://www.springframework.org/schema/beans 
      http://www.springframework.org/schema/beans/spring-beans.xsd 
      http://www.springframework.org/schema/integration
@@ -15,68 +13,52 @@
      http://www.springframework.org/schema/context
      http://www.springframework.org/schema/context/spring-context.xsd
     ">
-    
-    <bean class="com.calamp.messaging.spring.integration.poc.Transforms" name="transforms"/>
-    <bean class="com.calamp.messaging.spring.integration.poc.Routers" name="routers"/>
-    <bean class="com.calamp.messaging.spring.integration.poc.ServiceActivators" name="serviceActivators"/>
-    <bean class="com.calamp.messaging.spring.integration.poc.CalAmpSIErrorHandler" name="calAmpErrorHandler" />
-    <!-- <context:component-scan base-package="com.calamp.messaging.spring.integration.poc" /> -->
-    <!-- <context:property-placeholder location="file:///..........si-ident.properties" /> -->
-    <!-- 
-    <int:router
-        input-channel="calAmpSourceChannel"
-        default-output-channel="calAmpTargetChannel"
-        apply-sequence="true"
-        ref="routers"
-        method="route"
-    />
-    -->
-     
-    <int:poller 
-        id="defaultPoller" 
-        default="true" 
-        max-messages-per-poll="16" 
-        fixed-rate="128"
-    />
-    
-    <int:channel id="calAmpStageChannel" />
-    <int:channel id="calAmpSourceChannel" />
-    <int:publish-subscribe-channel id="calAmpTargetChannel" />
-    <int:publish-subscribe-channel id="calAmpErrorChannel" />
-    
-    <int:header-value-router header-name="calamp-next-hop"
-    	input-channel="calAmpSourceChannel"
-    	default-output-channel="calAmpStageChannel" 
-    	apply-sequence="true" 
-    	ignore-send-failures="false"
-    	resolution-required="false">
-        <int:mapping value="!" channel="calAmpTargetChannel" />
-    </int:header-value-router>
 
-    <int:transformer 
-        input-channel="calAmpStageChannel"
-        output-channel="calAmpSourceChannel" 
-        ref="transforms"
-        method="transform" 
-    />
-    
-    <int:service-activator ref="serviceActivators"
-        input-channel="calAmpTargetChannel" 
-        method="printObject"
-    />
-    
-    <int:service-activator 
-        input-channel="calAmpErrorChannel" 
-        output-channel="calAmpTargetChannel"
-        ref="calAmpErrorHandler" 
-        method="handleErrorMessage"/>
+ <bean class="com.calamp.messaging.spring.integration.poc.Transforms"
+  name="transforms" />
+ <bean class="com.calamp.messaging.spring.integration.poc.Routers"
+  name="routers" />
+ <bean class="com.calamp.messaging.spring.integration.poc.ServiceActivators"
+  name="serviceActivators" />
+ <bean
+  class="com.calamp.messaging.spring.integration.poc.CalAmpSIErrorHandler"
+  name="calAmpErrorHandler" />
+ <!-- <context:component-scan base-package="com.calamp.messaging.spring.integration.poc" 
+  /> -->
+ <!-- <context:property-placeholder location="file:///..........si-ident.properties" 
+  /> -->
+ <!-- <int:router input-channel="calAmpSourceChannel" default-output-channel="calAmpTargetChannel" 
+  apply-sequence="true" ref="routers" method="route" /> -->
 
-    <int:gateway id="calAmpSIRouteAndProcessService"
-    	service-interface="com.calamp.messaging.spring.integration.poc.CalAmpSIRouteAndProcessService"
-    	default-request-channel="calAmpStageChannel"
-    	default-reply-channel="calAmpTargetChannel"
-    	error-channel="calAmpErrorChannel">
-         <int:method name="processMessage" request-channel="calAmpStageChannel"/>
-    </int:gateway>
+ <int:poller id="defaultPoller" default="true"
+  max-messages-per-poll="16" fixed-rate="128" />
+
+ <int:channel id="calAmpStageChannel" />
+ <int:channel id="calAmpSourceChannel" />
+ <int:publish-subscribe-channel id="calAmpTargetChannel" />
+ <int:publish-subscribe-channel id="calAmpErrorChannel" />
+
+ <int:header-value-router header-name="calamp-next-hop"
+  input-channel="calAmpSourceChannel" default-output-channel="calAmpStageChannel"
+  apply-sequence="true" ignore-send-failures="false"
+  resolution-required="false">
+  <int:mapping value="!" channel="calAmpTargetChannel" />
+ </int:header-value-router>
+
+ <int:transformer input-channel="calAmpStageChannel"
+  output-channel="calAmpSourceChannel" ref="transforms" method="transform" />
+
+ <int:service-activator ref="serviceActivators"
+  input-channel="calAmpTargetChannel" method="printObject" />
+
+ <int:service-activator input-channel="calAmpErrorChannel"
+  output-channel="calAmpTargetChannel" ref="calAmpErrorHandler" method="handleErrorMessage" />
+
+ <int:gateway id="calAmpSIRouteAndProcessService"
+  service-interface="com.calamp.messaging.spring.integration.poc.CalAmpSIRouteAndProcessService"
+  default-request-channel="calAmpStageChannel" default-reply-channel="calAmpTargetChannel"
+  error-channel="calAmpErrorChannel">
+  <int:method name="processMessage" request-channel="calAmpStageChannel" />
+ </int:gateway>
 
 </beans>

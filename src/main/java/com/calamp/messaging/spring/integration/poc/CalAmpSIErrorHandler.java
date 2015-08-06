@@ -10,21 +10,21 @@ import org.springframework.stereotype.Component;
 @Component
 @MessageEndpoint
 public class CalAmpSIErrorHandler {
-    private static final Logger log = Logger.getLogger(CalAmpSIErrorHandler.class.getName());
-    
+    private static final Logger log = Logger
+            .getLogger(CalAmpSIErrorHandler.class.getName());
+
     @ServiceActivator(inputChannel = CalAmpSIConfig.errorChannelName, outputChannel = CalAmpSIConfig.targetChannelName)
-    public Message<CalAmpSIWrapper> handleErrorMessage(Message<Exception> errorMessage) {
-	Exception e = errorMessage.getPayload();
+    public Message<CalAmpSIWrapper> handleErrorMessage(
+            Message<Exception> errorMessage) {
+        Exception e = errorMessage.getPayload();
         String preamble = "[Error]: ";
-	log.info(preamble + e);
-	System.out.println(preamble + e);
-	
-	CalAmpSIWrapper errorWrapper = new CalAmpSIWrapper(e);
-	Message<CalAmpSIWrapper> m1;	
-	m1 = MessageBuilder
-		.withPayload(errorWrapper)
-		.copyHeaders(errorMessage.getHeaders())
-		.build();
-	return m1;
+        log.info(preamble + e);
+        System.out.println(preamble + e);
+
+        CalAmpSIWrapper errorWrapper = new CalAmpSIWrapper(e);
+        Message<CalAmpSIWrapper> m1;
+        m1 = MessageBuilder.withPayload(errorWrapper)
+                .copyHeaders(errorMessage.getHeaders()).build();
+        return m1;
     }
 }

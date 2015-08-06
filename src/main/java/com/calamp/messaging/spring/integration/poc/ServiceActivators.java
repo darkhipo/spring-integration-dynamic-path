@@ -9,12 +9,13 @@ import org.springframework.stereotype.Component;
 @MessageEndpoint
 public class ServiceActivators {
 
-    private static final Logger log = Logger.getLogger(ServiceActivators.class.getName());
-    
+    private static final Logger log = Logger.getLogger(ServiceActivators.class
+            .getName());
+
     @ServiceActivator(inputChannel = CalAmpSIConfig.targetChannelName)
-    public void printObject(Object obj){
-	String preamble = "[Message at Completion]: ";
-	log.info(preamble + obj);
-	//System.out.println(obj);
+    public void printObject(Object obj) {
+        String preamble = "[Message at Completion]: ";
+        log.info(preamble + obj);
+        // System.out.println(obj);
     }
 }
